@@ -1,103 +1,59 @@
-# Security & Environment Setup Guide
+# Security & Deployment Guide
 
-## 🔐 For Repository Owner (You)
+## 🚀 Quick Deployment to Vercel (Recommended)
 
-### What NOT to Commit to GitHub
+### Step 1: Connect to Vercel
 
-**NEVER commit these files:**
-- `.env` - Contains your actual API keys
-- `.env.local` - Contains local development secrets
-- `.env.production` - Contains production secrets
+1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
+2. Click "Add New Project"
+3. Import the `tripwire24/Mynd-Analytics-Agent` repository
+4. Click "Deploy" (default settings work fine)
 
-✅ **The `.gitignore` file is already configured to prevent this.**
+### Step 2: Add Your API Key
 
-### What IS Safe to Commit
+1. In Vercel, go to your project → **Settings** → **Environment Variables**
+2. Add a new variable:
+   - **Name**: `GEMINI_API_KEY`
+   - **Value**: Your Gemini API key
+   - **Environment**: All (Production, Preview, Development)
+3. Click **Save**
+4. **Redeploy** the project (Settings → Deployments → Redeploy)
 
-**These ARE safe to commit:**
-- `.env.example` - Template file with placeholder values
-- `MCP endpoint URL` - It's a public URL, intentionally accessible
-- `GA4 Property ID (413266651)` - Already in the code, not a secret
+### Step 3: Access Your App
 
-## 🚀 Setup Instructions for Your Client
+Your app will be live at: `https://mynd-analytics-agent.vercel.app` (or similar)
 
-### Step 1: Clone the Repository
+Share this URL with your client - they can use it directly!
 
-```bash
-git clone https://github.com/tripwire24/Mynd-Analytics-Agent.git
-cd Mynd-Analytics-Agent
-```
+---
 
-### Step 2: Install Dependencies
+## 🔐 Security Summary
 
-```bash
-npm install
-```
+| What | Where it's Stored | Who Can See It |
+|------|-------------------|----------------|
+| **GEMINI_API_KEY** | Vercel Dashboard (encrypted) | Only you |
+| **MCP Endpoint URL** | Hardcoded in app | Public (by design) |
+| **GA4 Property ID** | Hardcoded in app | Public (by design) |
 
-### Step 3: Configure Environment Variables
+---
 
-1. **Copy the example file:**
-   ```bash
-   cp .env.example .env.local
-   ```
+## 💻 Local Development (Optional)
 
-2. **Get a Gemini API Key:**
-   - Visit: https://ai.google.dev/gemini-api/docs/api-key
-   - Click "Get API Key"
-   - Create a new API key or use an existing one
+If you want to run locally instead of using Vercel:
 
-3. **Edit `.env.local` and replace the placeholder:**
-   ```
-   API_KEY=<paste_their_real_api_key_here>
-   ```
+1. Clone the repo: `git clone https://github.com/tripwire24/Mynd-Analytics-Agent.git`
+2. Install: `npm install`
+3. Copy env file: `cp .env.example .env.local`
+4. Edit `.env.local` and add your `GEMINI_API_KEY`
+5. Run: `npm run dev`
 
-### Step 4: Run the App
+---
 
-```bash
-npm run dev
-```
+## ⚠️ Never Commit Secrets
 
-The app will be available at `http://localhost:5173` (or similar).
+The `.gitignore` is configured to prevent committing:
+- `.env`
+- `.env.local`
+- `.env.production`
 
-## 📊 How the MCP Server Connection Works
-
-The app automatically connects to your deployed GA4 MCP server:
-- **Endpoint**: `https://ga4-mcp-server-ciyqx2rz4q-uc.a.run.app/sse`
-- **Property**: Mynd GA4 (413266651)
-- **Authentication**: The MCP server uses Google Cloud service account credentials (already configured on Cloud Run)
-
-**The client only needs their Gemini API key** - the MCP connection is handled automatically.
-
-## 🔒 GitHub Secrets (Advanced - Only if Deploying via GitHub Actions)
-
-If you want to deploy this app automatically via GitHub Actions, you can store secrets in your repository:
-
-1. Go to your GitHub repo: https://github.com/tripwire24/Mynd-Analytics-Agent
-2. Click "Settings" → "Secrets and variables" → "Actions"
-3. Click "New repository secret"
-4. Add:
-   - Name: `API_KEY`
-   - Value: Your Gemini API key
-
-**Note**: You don't need this for local development - this is only for CI/CD deployment.
-
-## ⚠️ Security Best Practices
-
-1. **Never share your `.env.local` file** - it contains your API key
-2. **Only share `.env.example`** - this is the template without secrets
-3. **Tell clients to get their own API key** - don't share yours
-4. **The MCP endpoint URL is public** - it's okay to hardcode it in the app
-5. **Rotate API keys if compromised** - delete and create a new one
-
-## 🤝 Sharing with Your Client
-
-Send them:
-1. ✅ The GitHub repository link
-2. ✅ This SECURITY.md file
-3. ✅ Instructions to get their own Gemini API key
-4. ❌ DON'T send your `.env.local` or actual API key
-
-They will:
-1. Clone the repo
-2. Get their own Gemini API key
-3. Follow the setup instructions above
-4. Connect to your MCP server automatically
+If you accidentally commit a secret, rotate (delete and recreate) your API key immediately.
