@@ -98,7 +98,7 @@ const tools: Tool[] = [{ functionDeclarations: [getAnalyticsTool, renderChartToo
 export class GeminiService {
   private chat: Chat | null = null;
   private apiKey: string;
-  private modelId: string = "gemini-1.5-pro";
+  private modelId: string = "gemini-1.5-pro-002";
 
   constructor() {
     this.apiKey = process.env.API_KEY || '';

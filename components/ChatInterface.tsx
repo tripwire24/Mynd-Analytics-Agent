@@ -34,7 +34,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
       <div className="h-16 border-b border-gray-200 bg-white/80 backdrop-blur-sm flex items-center px-6 justify-between sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <span className="text-gray-500 font-medium">Model:</span>
-          <span className="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md font-semibold">Gemini 1.5 Pro</span>
+          <span className="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md font-semibold">Gemini 3 Pro</span>
           <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-md font-semibold flex items-center gap-1">
             <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
             MCP Active
@@ -95,8 +95,8 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
             onClick={onSend}
             disabled={!input.trim() || isStreaming}
             className={`absolute right-3 top-3 p-2 rounded-xl transition-all duration-200 ${input.trim() && !isStreaming
-                ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-md'
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-md'
+              : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
           >
             {isStreaming ? (
