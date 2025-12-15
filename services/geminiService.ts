@@ -1,5 +1,5 @@
 import { GoogleGenAI, Chat, FunctionDeclaration, Type, Tool } from "@google/genai";
-import { queryAnalytics } from './mockMcpService';
+import { queryAnalytics } from './mcpService';
 import { ChartConfig, ToolCall } from '../types';
 
 const SYSTEM_INSTRUCTION = `
