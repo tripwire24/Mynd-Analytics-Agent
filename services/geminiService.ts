@@ -98,11 +98,17 @@ const tools: Tool[] = [{ functionDeclarations: [getAnalyticsTool, renderChartToo
 export class GeminiService {
   private chat: Chat | null = null;
   private apiKey: string;
-  private modelId: string = "gemini-1.5-pro-002";
+  // Using Flash model for highest stability and speed
+  private modelId: string = "gemini-1.5-flash";
 
   constructor() {
     this.apiKey = process.env.API_KEY || '';
   }
+
+  // ... (existing code)
+
+  // In sendMessageStream catch block (I'll target the catch block specifically below)
+
 
   initialize() {
     if (!this.apiKey) {

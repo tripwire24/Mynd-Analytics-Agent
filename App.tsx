@@ -35,7 +35,7 @@ const App: React.FC = () => {
     // In a real app, we would load messages for this session ID here.
     // For this demo, we just clear messages if switching (mocking separate history)
     // Or we could store messages in a map. Let's simpler: just clear for now since no backend.
-    setMessages([]); 
+    setMessages([]);
   };
 
   const handleSend = async () => {
@@ -67,7 +67,7 @@ const App: React.FC = () => {
 
     // Update session title if it's the first message
     if (messages.length === 0 && currentSessionId) {
-      setSessions(prev => prev.map(s => 
+      setSessions(prev => prev.map(s =>
         s.id === currentSessionId ? { ...s, title: currentInput.slice(0, 30) + (currentInput.length > 30 ? '...' : '') } : s
       ));
     }
@@ -97,11 +97,12 @@ const App: React.FC = () => {
       );
     } catch (error) {
       console.error("Error sending message:", error);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error";
       setMessages(prev => prev.map(msg => {
-         if (msg.id === aiMsgId) {
-           return { ...msg, text: "I encountered an error connecting to the analytics service. Please try again.", isLoading: false };
-         }
-         return msg;
+        if (msg.id === aiMsgId) {
+          return { ...msg, text: `I encountered an error connecting to the analytics service.\n\nDetails: ${errorMessage}\n\nPlease check your API key and connection.`, isLoading: false };
+        }
+        return msg;
       }));
     } finally {
       setIsStreaming(false);
@@ -114,17 +115,17 @@ const App: React.FC = () => {
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
-      <Sidebar 
-        sessions={sessions} 
+      <Sidebar
+        sessions={sessions}
         currentSessionId={currentSessionId}
         onSelectSession={handleSelectSession}
         onNewChat={handleNewChat}
       />
       <main className="flex-1 h-full min-w-0">
-        <ChatInterface 
-          messages={messages} 
-          input={input} 
-          setInput={setInput} 
+        <ChatInterface
+          messages={messages}
+          input={input}
+          setInput={setInput}
           onSend={handleSend}
           isStreaming={isStreaming}
         />
