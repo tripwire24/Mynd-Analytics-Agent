@@ -98,8 +98,8 @@ const tools: Tool[] = [{ functionDeclarations: [getAnalyticsTool, renderChartToo
 export class GeminiService {
   private chat: Chat | null = null;
   private apiKey: string;
-  // User requested "Gemini 3 Pro" - using Flash for reliability/access
-  private modelId: string = "gemini-1.5-flash";
+  // User requested "Gemini 3 Pro" - verified in docs as valid preview model
+  private modelId: string = "gemini-3-pro-preview";
 
   constructor() {
     this.apiKey = process.env.API_KEY || '';
