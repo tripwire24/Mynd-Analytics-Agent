@@ -44,7 +44,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-4 md:p-8 scrollbar-hide">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-[60vh] text-gray-400">
               <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-6">
@@ -80,7 +80,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
 
       {/* Input Area */}
       <div className="p-4 bg-white border-t border-gray-100">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
