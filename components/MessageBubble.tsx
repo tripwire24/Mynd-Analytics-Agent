@@ -75,8 +75,8 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
         {/* Render Charts if any */}
         {message.toolCalls && message.toolCalls.map((call) => (
           <div key={call.id} className="w-full mt-2">
-            {/* Visual Cue for Data Fetching */}
-            {call.name === 'get_analytics_data' && (
+            {/* Visual Cue for Data Fetching - Hides after result is received */}
+            {call.name === 'get_analytics_data' && !call.result && (
               <div className="flex items-center text-xs text-indigo-500 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100 w-fit mb-2">
                 <svg className="w-3 h-3 mr-2 animate-spin" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>

@@ -93,6 +93,19 @@ const App: React.FC = () => {
             }
             return msg;
           }));
+        },
+        (toolId: string, result: any) => {
+          setMessages(prev => prev.map(msg => {
+            if (msg.id === aiMsgId && msg.toolCalls) {
+              return {
+                ...msg,
+                toolCalls: msg.toolCalls.map(tc =>
+                  tc.id === toolId ? { ...tc, result: result } : tc
+                )
+              };
+            }
+            return msg;
+          }));
         }
       );
     } catch (error) {

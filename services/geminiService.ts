@@ -142,20 +142,22 @@ export class GeminiService {
   async sendMessageStream(
     message: string,
     onChunk: (text: string) => void,
-    onToolCall: (call: ToolCall) => void
+    onToolCall: (call: ToolCall) => void,
+    onToolResult?: (toolId: string, result: any) => void
   ) {
     if (!this.chat) this.initialize();
     if (!this.chat) throw new Error("Failed to initialize chat");
 
     // Send initial message
     const responseStream = await this.chat.sendMessageStream({ message });
-    await this.handleStream(responseStream, onChunk, onToolCall);
+    await this.handleStream(responseStream, onChunk, onToolCall, onToolResult);
   }
 
   private async handleStream(
     stream: any,
     onChunk: (text: string) => void,
-    onToolCall: (call: ToolCall) => void
+    onToolCall: (call: ToolCall) => void,
+    onToolResult?: (toolId: string, result: any) => void
   ) {
     const functionCalls: any[] = [];
 
@@ -200,6 +202,10 @@ export class GeminiService {
           toolResult = { error: "Failed to execute tool" };
         }
 
+        if (onToolResult) {
+          onToolResult(callId, toolResult);
+        }
+
         // Prepare the response part
         functionResponseParts.push({
           functionResponse: {
@@ -217,7 +223,7 @@ export class GeminiService {
       });
 
       // 4. Recursively handle the new stream (which might contain the model's text summary or more tool calls)
-      await this.handleStream(nextStream, onChunk, onToolCall);
+      await this.handleStream(nextStream, onChunk, onToolCall, onToolResult);
     }
   }
 }
