@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
+import { toPng } from 'html-to-image';
 import {
   LineChart, Line, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -13,55 +14,23 @@ const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899'
 
 const ChartWidget: React.FC<ChartWidgetProps> = ({ config }) => {
   const { type, data, xAxisKey, dataKeys, title } = config;
-  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
-  const handleDownload = () => {
-    if (!chartContainerRef.current) return;
-
-    // Find the SVG element rendered by Recharts
-    const svgElement = chartContainerRef.current.querySelector('svg');
-    if (!svgElement) return;
-
-    // Serialize SVG to string
-    const serializer = new XMLSerializer();
-    const svgString = serializer.serializeToString(svgElement);
-
-    // Create a Canvas to render the SVG
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    // Set canvas dimensions based on SVG (adding some padding/resolution for quality)
-    const rect = svgElement.getBoundingClientRect();
-    const scale = 2; // Higher resolution
-    canvas.width = rect.width * scale;
-    canvas.height = rect.height * scale;
-
-    if (ctx) {
-      // White background
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.scale(scale, scale);
+  const handleDownload = useCallback(async () => {
+    if (chartRef.current === null) {
+      return;
     }
 
-    const img = new Image();
-    const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(svgBlob);
-
-    img.onload = () => {
-      ctx?.drawImage(img, 0, 0);
-      const pngUrl = canvas.toDataURL('image/png');
-
+    try {
+      const dataUrl = await toPng(chartRef.current, { cacheBust: true, backgroundColor: '#ffffff' });
       const link = document.createElement('a');
-      link.href = pngUrl;
       link.download = `${title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.png`;
-      document.body.appendChild(link);
+      link.href = dataUrl;
       link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-    };
-
-    img.src = url;
-  };
+    } catch (err) {
+      console.error('Failed to download chart image', err);
+    }
+  }, [title]);
 
   const renderChart = () => {
     switch (type) {
@@ -180,7 +149,7 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({ config }) => {
           </svg>
         </button>
       </div>
-      <div className="h-64 w-full" ref={chartContainerRef}>
+      <div className="h-64 w-full" ref={chartRef}>
         <ResponsiveContainer width="100%" height="100%">
           {renderChart() || <div>Unknown chart type</div>}
         </ResponsiveContainer>
