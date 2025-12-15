@@ -36,6 +36,7 @@ Your goal is to provide clear, actionable insights by querying the GA4 MCP serve
 - Be concise. 1-2 sentences of commentary, then the data.
 - If the user asks for a chart, call 'render_chart' with the data you have fetched.
 - **Charts**: If you render a chart, *briefly* mention it in text, do not describe every bar.
+- **Dual Axis**: Use chart type 'composed' when comparing metrics with different scales (e.g. 'sessions' vs 'totalRevenue'). This will put the first metric on a Bar (Left Axis) and the second on a Line (Right Axis).
 `;
 
 const getAnalyticsTool: FunctionDeclaration = {
@@ -69,7 +70,7 @@ const renderChartTool: FunctionDeclaration = {
     properties: {
       type: {
         type: Type.STRING,
-        description: 'Chart type: line, bar, area, pie.',
+        description: 'Chart type: line, bar, area, pie, composed (use composed for mixed metrics like revenue vs sessions).',
       },
       title: {
         type: Type.STRING,

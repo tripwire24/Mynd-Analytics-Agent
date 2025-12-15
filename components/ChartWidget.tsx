@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react';
 import { toPng } from 'html-to-image';
 import {
-  LineChart, Line, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell,
+  LineChart, Line, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, ComposedChart,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import { ChartConfig } from '../types';
@@ -129,6 +129,29 @@ const ChartWidget: React.FC<ChartWidgetProps> = ({ config }) => {
             <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
             <Legend layout="vertical" verticalAlign="middle" align="right" />
           </PieChart>
+        );
+      case 'composed':
+        return (
+          <ComposedChart data={data}>
+            <CartesianGrid stroke="#f5f5f5" />
+            <XAxis dataKey={xAxisKey} scale="band" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 12 }} dy={10} />
+            <YAxis yAxisId="left" orientation="left" stroke="#8884d8" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" axisLine={false} tickLine={false} tick={{ fill: '#6b7280', fontSize: 12 }} />
+            <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+            <Legend />
+            {/* First metric as Bar on Left Axis (Volume) */}
+            {dataKeys[0] && (
+              <Bar yAxisId="left" dataKey={dataKeys[0]} barSize={20} fill="#6366f1" radius={[4, 4, 0, 0]} />
+            )}
+            {/* Second metric as Line on Right Axis (Trend/Revenue) */}
+            {dataKeys[1] && (
+              <Line yAxisId="right" type="monotone" dataKey={dataKeys[1]} stroke="#10b981" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
+            )}
+            {/* Any remaining metrics as Lines on Left Axis */}
+            {dataKeys.slice(2).map((key, index) => (
+              <Line key={key} yAxisId="left" type="monotone" dataKey={key} stroke={COLORS[(index + 2) % COLORS.length]} strokeWidth={2} dot={false} />
+            ))}
+          </ComposedChart>
         );
       default:
         return null;

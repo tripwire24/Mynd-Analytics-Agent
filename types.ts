@@ -4,7 +4,7 @@ export interface ChartDataPoint {
 }
 
 export interface ChartConfig {
-  type: 'line' | 'bar' | 'area' | 'pie';
+  type: 'line' | 'bar' | 'area' | 'pie' | 'composed';
   title: string;
   data: ChartDataPoint[];
   xAxisKey: string;
