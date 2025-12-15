@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# Environment variables (IMPORTANT: Never commit these!)
+.env
+.env.local
+.env.production
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -19,6 +24,6 @@ dist-ssr
 .DS_Store
 *.suo
 *.ntvs*
-*.njsproj
+*.njsproj*
 *.sln
 *.sw?
