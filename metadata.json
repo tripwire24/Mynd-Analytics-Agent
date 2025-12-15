@@ -1,0 +1,5 @@
+{
+  "name": "MYND Analytics AI",
+  "description": "A ChatGPT-style analytics interface for Mind (MYND), featuring simulated MCP connections to Google Analytics for data visualization and business insights.",
+  "requestFramePermissions": []
+}
