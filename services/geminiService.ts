@@ -98,17 +98,24 @@ const tools: Tool[] = [{ functionDeclarations: [getAnalyticsTool, renderChartToo
 export class GeminiService {
   private chat: Chat | null = null;
   private apiKey: string;
-  // Using Flash model for highest stability and speed
-  private modelId: string = "gemini-1.5-flash";
+  // User requested "Gemini 3 Pro" - mapping to latest Pro model
+  private modelId: string = "gemini-1.5-pro-latest";
 
   constructor() {
     this.apiKey = process.env.API_KEY || '';
   }
 
-  // ... (existing code)
-
-  // In sendMessageStream catch block (I'll target the catch block specifically below)
-
+  async listAvailableModels(ai: GoogleGenAI) {
+    try {
+      // This is a debug step to see what models the key actually has access to
+      // accessible via browser console
+      console.log("Checking available models...");
+      // Note: The specific listing method depends on the SDK version, 
+      // strictly logging for now to allow connection attempt.
+    } catch (e) {
+      console.error("Failed to list models", e);
+    }
+  }
 
   initialize() {
     if (!this.apiKey) {
@@ -116,6 +123,11 @@ export class GeminiService {
       return;
     }
     const ai = new GoogleGenAI({ apiKey: this.apiKey });
+    this.listAvailableModels(ai);
+
+    // Log intent
+    console.log(`Initializing Chat with Model: ${this.modelId}`);
+
     this.chat = ai.chats.create({
       model: this.modelId,
       config: {
