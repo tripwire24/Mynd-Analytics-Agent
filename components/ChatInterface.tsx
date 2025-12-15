@@ -32,14 +32,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
     <div className="flex flex-col h-full bg-gray-50 relative">
       {/* Header */}
       <div className="h-16 border-b border-gray-200 bg-white/80 backdrop-blur-sm flex items-center px-6 justify-between sticky top-0 z-10">
-         <div className="flex items-center gap-2">
-            <span className="text-gray-500 font-medium">Model:</span>
-            <span className="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md font-semibold">Gemini 2.5 Flash</span>
-            <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-md font-semibold flex items-center gap-1">
-               <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
-               MCP Active
-            </span>
-         </div>
+        <div className="flex items-center gap-2">
+          <span className="text-gray-500 font-medium">Model:</span>
+          <span className="bg-indigo-100 text-indigo-700 text-xs px-2 py-1 rounded-md font-semibold">Gemini 1.5 Pro</span>
+          <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-md font-semibold flex items-center gap-1">
+            <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+            MCP Active
+          </span>
+        </div>
       </div>
 
       {/* Messages Area */}
@@ -47,29 +47,29 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
         <div className="max-w-3xl mx-auto">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-[60vh] text-gray-400">
-               <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-6">
-                 <svg className="w-8 h-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                 </svg>
-               </div>
-               <h2 className="text-xl font-semibold text-gray-700 mb-2">Mynd Analytics AI</h2>
-               <p className="text-center max-w-md mb-8">
-                 Ask me anything about MYND's performance. I can visualize user trends, revenue, and conversion data directly from the MCP Endpoint.
-               </p>
-               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-lg">
-                  <button onClick={() => setInput("Show me active users for the last 30 days")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
-                     "Show active users last 30 days"
-                  </button>
-                  <button onClick={() => setInput("Compare mobile vs desktop revenue")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
-                     "Compare mobile vs desktop revenue"
-                  </button>
-                  <button onClick={() => setInput("What is our current conversion rate trend?")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
-                     "Conversion rate trend?"
-                  </button>
-                  <button onClick={() => setInput("Analyze traffic sources for last week")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
-                     "Analyze traffic sources"
-                  </button>
-               </div>
+              <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center mb-6">
+                <svg className="w-8 h-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h2 className="text-xl font-semibold text-gray-700 mb-2">Mynd Analytics AI</h2>
+              <p className="text-center max-w-md mb-8">
+                Ask me anything about MYND's performance. I can visualize user trends, revenue, and conversion data directly from the MCP Endpoint.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-lg">
+                <button onClick={() => setInput("Show me active users for the last 30 days")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
+                  "Show active users last 30 days"
+                </button>
+                <button onClick={() => setInput("Compare mobile vs desktop revenue")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
+                  "Compare mobile vs desktop revenue"
+                </button>
+                <button onClick={() => setInput("What is our current conversion rate trend?")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
+                  "Conversion rate trend?"
+                </button>
+                <button onClick={() => setInput("Analyze traffic sources for last week")} className="text-sm p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors text-left text-gray-600">
+                  "Analyze traffic sources"
+                </button>
+              </div>
             </div>
           ) : (
             messages.map((msg) => <MessageBubble key={msg.id} message={msg} />)
@@ -94,11 +94,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
           <button
             onClick={onSend}
             disabled={!input.trim() || isStreaming}
-            className={`absolute right-3 top-3 p-2 rounded-xl transition-all duration-200 ${
-              input.trim() && !isStreaming
-                ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-md' 
+            className={`absolute right-3 top-3 p-2 rounded-xl transition-all duration-200 ${input.trim() && !isStreaming
+                ? 'bg-indigo-600 text-white hover:bg-indigo-500 shadow-md'
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-            }`}
+              }`}
           >
             {isStreaming ? (
               <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -113,7 +112,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, input, setInput
           </button>
         </div>
         <div className="text-center mt-2">
-            <p className="text-[10px] text-gray-400">AI can make mistakes. Please verify important data.</p>
+          <p className="text-[10px] text-gray-400">AI can make mistakes. Please verify important data.</p>
         </div>
       </div>
     </div>

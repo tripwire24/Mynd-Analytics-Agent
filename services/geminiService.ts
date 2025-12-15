@@ -98,7 +98,7 @@ const tools: Tool[] = [{ functionDeclarations: [getAnalyticsTool, renderChartToo
 export class GeminiService {
   private chat: Chat | null = null;
   private apiKey: string;
-  private modelId: string = "gemini-2.5-flash";
+  private modelId: string = "gemini-1.5-pro";
 
   constructor() {
     this.apiKey = process.env.API_KEY || '';
@@ -120,7 +120,7 @@ export class GeminiService {
   }
 
   async sendMessageStream(
-    message: string, 
+    message: string,
     onChunk: (text: string) => void,
     onToolCall: (call: ToolCall) => void
   ) {
@@ -133,7 +133,7 @@ export class GeminiService {
   }
 
   private async handleStream(
-    stream: any, 
+    stream: any,
     onChunk: (text: string) => void,
     onToolCall: (call: ToolCall) => void
   ) {
